@@ -6,7 +6,7 @@ const Country = (props) => {
 
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
-    medals.forEach(medal => { sum += country[medal.name]; });
+    medals.forEach(medal => { sum += country[medal.name].page_value; });
     return sum;
   }
   return (
