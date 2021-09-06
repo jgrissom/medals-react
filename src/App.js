@@ -64,6 +64,18 @@ const App = () => {
 
         connection.on('ReceiveAddMessage', country => {
           console.log(`Add: ${country.name}`);
+
+          let newCountry = { 
+            id: country.id, 
+            name: country.name,
+          };
+          medals.current.forEach(medal => {
+            const count = country[medal.name];
+            newCountry[medal.name] = { page_value: count, saved_value: count };
+          });
+          let mutableCountries = [...latestCountries.current];
+          mutableCountries = mutableCountries.concat(newCountry);
+          setCountries(mutableCountries);
         });
       })
       .catch(e => console.log('Connection failed: ', e));
@@ -72,16 +84,7 @@ const App = () => {
   }, [connection]);
 
   const handleAdd = async (name) => {
-    const { data: post } = await axios.post(apiEndpoint, { name: name });
-    let newCountry = { 
-      id: post.id, 
-      name: post.name,
-    };
-    medals.current.forEach(medal => {
-      const count = post[medal.name];
-      newCountry[medal.name] = { page_value: count, saved_value: count };
-    });
-    setCountries(countries.concat(newCountry));
+    await axios.post(apiEndpoint, { name: name });
   }
   const handleDelete = async (countryId) => {
     const originalCountries = countries;
