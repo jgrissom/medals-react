@@ -87,6 +87,19 @@ const App = () => {
 
         connection.on('ReceivePatchMessage', country => {
           console.log(`Patch: ${country.name}`);
+          let updatedCountry = {
+            id: country.id,
+            name: country.name,
+          }
+          medals.current.forEach(medal => {
+            const count = country[medal.name];
+            updatedCountry[medal.name] = { page_value: count, saved_value: count };
+          });
+          let mutableCountries = [...latestCountries.current];
+          const idx = mutableCountries.findIndex(c => c.id === country.id);
+          mutableCountries[idx] = updatedCountry;
+
+          setCountries(mutableCountries);
         });
       })
       .catch(e => console.log('Connection failed: ', e));
