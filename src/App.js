@@ -1,6 +1,6 @@
 // Repository:  medals-b-react
 // Author:      Jeff Grissom
-// Version:     6.xx
+// Version:     7.xx-02
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Country from './components/Country';
