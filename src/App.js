@@ -1,6 +1,6 @@
 // Repository:  medals-b-react
 // Author:      Jeff Grissom
-// Version:     5.xx
+// Version:     6.xx
 import React, { useState, useEffect, useRef } from 'react';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
