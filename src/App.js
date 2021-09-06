@@ -51,6 +51,10 @@ const App = () => {
 
         connection.on('ReceiveAddMessage', country => {
           console.log(`Add: ${country.name}`);
+          let mutableCountries = [...latestCountries.current];
+          mutableCountries = mutableCountries.concat(country);
+
+          setCountries(mutableCountries);
         });
       })
       .catch(e => console.log('Connection failed: ', e));
@@ -59,8 +63,7 @@ const App = () => {
   }, [connection]);
 
   const handleAdd = async (name) => {
-    const { data: post } = await axios.post(apiEndpoint, { name: name });
-    setCountries(countries.concat(post));
+    await axios.post(apiEndpoint, { name: name });
   }
   const handleDelete = async (countryId) => {
     const originalCountries = countries;
