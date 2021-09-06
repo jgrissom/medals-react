@@ -27,9 +27,9 @@ const App = () => {
     fetchCountries();
   }, []);
 
-  const handleAdd = (name) => {
-    // const id = countries.length === 0 ? 1 : Math.max(...countries.map(country => country.id)) + 1;
-    // setCountries([...countries].concat({ id: id, name: name, gold: 0, silver: 0, bronze: 0 }));
+  const handleAdd = async (name) => {
+    const { data: post } = await axios.post(apiEndpoint, { name: name });
+    setCountries(countries.concat(post));
   }
   const handleDelete = (countryId) => {
     // setCountries([...countries].filter(c => c.id !== countryId));
