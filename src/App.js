@@ -56,6 +56,10 @@ const App = () => {
 
           setCountries(mutableCountries);
         });
+
+        connection.on('ReceiveDeleteMessage', id => {
+          console.log(`Delete id: ${id}`);
+        });
       })
       .catch(e => console.log('Connection failed: ', e));
     }
