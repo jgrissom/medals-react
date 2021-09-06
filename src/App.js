@@ -66,6 +66,12 @@ const App = () => {
       }
     }
   }
+  const handleSave = (countryId) => {
+    console.log(`Save: ${countryId}`);
+  }
+  const handleReset = (countryId) => {
+    console.log(`Reset: ${countryId}`);
+  }
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
   const handleDecrement = (countryId, medalName) => handleUpdate(countryId, medalName, -1);
   const handleUpdate = (countryId, medalName, factor) => {
@@ -94,6 +100,8 @@ const App = () => {
               country={ country } 
               medals={ medals.current }
               onDelete={ handleDelete }
+              onSave={ handleSave }
+              onReset={ handleReset }
               onIncrement={ handleIncrement } 
               onDecrement={ handleDecrement } />
           )}
