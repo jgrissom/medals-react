@@ -46,17 +46,15 @@ const App = () => {
       }
     }
   }
-  const handleIncrement = (countryId, medalName) => {
+  const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
+  const handleDecrement = (countryId, medalName) =>  handleUpdate(countryId, medalName, -1)
+  const handleUpdate = (countryId, medalName, factor) => {
     const idx = countries.findIndex(c => c.id === countryId);
     const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] += 1;
+    mutableCountries[idx][medalName] += (1 * factor);
     setCountries(mutableCountries);
-  }
-  const handleDecrement = (countryId, medalName) => {
-    const idx = countries.findIndex(c => c.id === countryId);
-    const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] -= 1;
-    setCountries(mutableCountries);
+    const jsonPatch = [{ op: "replace", path: medalName, value: mutableCountries[idx][medalName] }];
+    console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
