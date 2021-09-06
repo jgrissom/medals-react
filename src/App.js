@@ -67,6 +67,11 @@ const App = () => {
 
         connection.on('ReceivePatchMessage', country => {
           console.log(`Patch: ${country.name}`);
+          let mutableCountries = [...latestCountries.current];
+          const idx = mutableCountries.findIndex(c => c.id === country.id);
+          mutableCountries[idx] = country;
+
+          setCountries(mutableCountries);
         });
       })
       .catch(e => console.log('Connection failed: ', e));
