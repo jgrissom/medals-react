@@ -1,6 +1,7 @@
 {
   "name": "medals-b-react",
   "version": "0.1.0",
+  "homepage": "http://jgrissom.github.io/react/medals-08-02/",
   "private": true,
   "dependencies": {
     "@microsoft/signalr": "^5.0.9",
