@@ -102,9 +102,9 @@ const App = () => {
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
   const handleDecrement = (countryId, medalName) =>  handleUpdate(countryId, medalName, -1)
   const handleUpdate = async (countryId, medalName, factor) => {
-    const originalCountries = countries;
     const idx = countries.findIndex(c => c.id === countryId);
     const mutableCountries = [...countries ];
+    const originalCount = mutableCountries[idx][medalName];
     mutableCountries[idx][medalName] += (1 * factor);
     setCountries(mutableCountries);
     const jsonPatch = [{ op: "replace", path: medalName, value: mutableCountries[idx][medalName] }];
@@ -114,11 +114,17 @@ const App = () => {
       await axios.patch(`${jwtApiEndPoint}/${countryId}`, jsonPatch);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
-        // country already deleted
-        console.log("The record does not exist - it may have already been deleted");
-      } else { 
-        alert('An error occurred while updating');
-        setCountries(originalCountries);
+        // country does not exist
+        console.log("The record does not exist - it may have been deleted");
+      } else if (ex.response && ex.response.status === 401) { 
+        alert('You are not authorized to complete this request');
+        const revertCountries = [...countries];
+        revertCountries[idx][medalName] = originalCount;
+        setCountries(revertCountries);
+      } else if (ex.response) {
+        console.log(ex.response);
+      } else {
+        console.log("Request failed");
       }
     }
   }
