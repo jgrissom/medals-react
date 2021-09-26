@@ -10,8 +10,10 @@ import './App.css';
 
 const App = () => {
   // const apiEndpoint = "https://localhost:5001/api/country";
+  // const jwtApiEndPoint = "https://localhost:5001/jwtapi/country";
   // const hubEndpoint = "https://localhost:5001/medalsHub"
-  const apiEndpoint = "https://medalsapi.azurewebsites.net/api/country";
+  // const apiEndpoint = "https://medalsapi.azurewebsites.net/api/country";
+  const jwtApiEndPoint = "https://medalsapi.azurewebsites.net/jwtapi/country";
   const hubEndpoint = "https://medalsapi.azurewebsites.net/medalsHub"
   const [ countries, setCountries ] = useState([]);
   const [ connection, setConnection] = useState(null);
@@ -29,7 +31,7 @@ const App = () => {
   useEffect(() => {
     // initial data loaded here
     async function fetchCountries() {
-      const { data : fetchedCountries } = await axios.get(apiEndpoint);
+      const { data : fetchedCountries } = await axios.get(jwtApiEndPoint);
       setCountries(fetchedCountries);
     }
     fetchCountries();
@@ -80,13 +82,13 @@ const App = () => {
   }, [connection]);
 
   const handleAdd = async (name) => {
-    await axios.post(apiEndpoint, { name: name });
+    await axios.post(jwtApiEndPoint, { name: name });
   }
   const handleDelete = async (countryId) => {
     const originalCountries = countries;
     setCountries(countries.filter(c => c.id !== countryId));
     try {
-      await axios.delete(`${apiEndpoint}/${countryId}`);
+      await axios.delete(`${jwtApiEndPoint}/${countryId}`);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         // country already deleted
@@ -109,7 +111,7 @@ const App = () => {
     console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
 
     try {
-      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
+      await axios.patch(`${jwtApiEndPoint}/${countryId}`, jsonPatch);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         // country already deleted
