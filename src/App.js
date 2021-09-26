@@ -82,7 +82,17 @@ const App = () => {
   }, [connection]);
 
   const handleAdd = async (name) => {
-    await axios.post(jwtApiEndPoint, { name: name });
+    try {
+      await axios.post(jwtApiEndPoint, { name: name });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 401) {
+        alert("You are not authorized to complete this request");
+      } else if (ex.response) {
+        console.log(ex.response);
+      } else {
+        console.log("Request failed");
+      }
+    }
   }
   const handleDelete = async (countryId) => {
     const originalCountries = countries;
