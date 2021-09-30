@@ -126,33 +126,40 @@ const App = () => {
     }
   }
   const handleSave = async (countryId) => {
-    const originalCountries = countries;
+    const originalCounts = {};
 
     const idx = countries.findIndex(c => c.id === countryId);
     const mutableCountries = [ ...countries ];
     const country = mutableCountries[idx];
     let jsonPatch = [];
     medals.current.forEach(medal => {
+      originalCounts[medal.name] = country[medal.name].saved_value;
       if (country[medal.name].page_value !== country[medal.name].saved_value) {
         jsonPatch.push({ op: "replace", path: medal.name, value: country[medal.name].page_value });
         country[medal.name].saved_value = country[medal.name].page_value;
       }
     });
     console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
-    // update state
-    setCountries(mutableCountries);
 
     try {
       await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
     } catch (ex) {
+      medals.current.forEach(medal => {
+        country[medal.name].page_value = originalCounts[medal.name];
+        country[medal.name].saved_value = originalCounts[medal.name];
+      });     
       if (ex.response && ex.response.status === 404) {
-        // country already deleted
-        console.log("The record does not exist - it may have already been deleted");
-      } else { 
-        alert('An error occurred while updating');
-        setCountries(originalCountries);
+        // country does not exist
+        console.log("The record does not exist - it may have been deleted");
+      } else if (ex.response && ex.response.status === 401) { 
+        alert('You are not authorized to complete this request');
+      } else if (ex.response) {
+        console.log(ex.response);
+      } else {
+        console.log("Request failed");
       }
     }
+    setCountries(mutableCountries);
   }
   const handleReset = (countryId) => {
     const idx = countries.findIndex(c => c.id === countryId);
