@@ -58,3 +58,25 @@
   text-align: center;
   margin-bottom: 20px; 
 }
+
+.loginLink, .logout {
+  color: #fff;
+  position:absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.loginForm {
+  border: 1px solid #999;
+  background-color: #dedede;
+  padding: 8px;
+  border-radius: 4px;
+  position: absolute;
+  width: 300px;
+  top: 65px;
+  left: 8px;
+}
+
+.logoutLink {
+  color: #fff;
+}
