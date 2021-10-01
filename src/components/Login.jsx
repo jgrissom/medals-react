@@ -1,6 +1,12 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 function Login() {
+  const history = useHistory();
+  const handleCancel = () => {
+    history.push("/");
+  }
+
   return (
     <form className='loginForm'>
       <p>
@@ -12,7 +18,7 @@ function Login() {
         <input type="password" name="password" id="password" placeholder="Password" />
       </p>
       <p>
-        <button type="submit">Submit</button> <button type="button">Cancel</button>
+        <button type="submit">Submit</button> <button onClick={handleCancel} type="button">Cancel</button>
       </p>
     </form>
   );
