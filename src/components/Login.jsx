@@ -24,7 +24,7 @@ function Login() {
         <input onChange={ (e) => setPassword(e.target.value) } value={password} type="password" name="password" id="password" placeholder="Password" />
       </p>
       <p>
-        <button type="submit">Submit</button> <button onClick={handleCancel} type="button">Cancel</button>
+        <button disabled={username.length === 0 || password.length === 0} type="submit">Submit</button> <button onClick={handleCancel} type="button">Cancel</button>
       </p>
     </form>
   );
