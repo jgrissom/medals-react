@@ -64,7 +64,7 @@
   font-style: italic;
 }
 
-.loginLink {
+.loginLink, .logout {
   color: #fff;
   position:absolute;
   top: 8px;
@@ -80,4 +80,8 @@
   width: 300px;
   top: 65px;
   left: 8px;
+}
+
+.logoutLink {
+  color: #fff;
 }

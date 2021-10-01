@@ -223,6 +223,18 @@ const App = () => {
       }
     }
   }
+  const handleLogout = (e) => {
+    e.preventDefault();
+    console.log('logout');
+    localStorage.removeItem('token');
+    setUser({
+      name: null,
+      canPost: false,
+      canPatch: false,
+      canDelete: false
+    });
+    return false;
+  }
   const getUser = (encodedJwt) => {
     const decodedJwt = jwtDecode(encodedJwt);
     return {
@@ -244,7 +256,11 @@ const App = () => {
         <span className='badge'>
           { getAllMedalsTotal() }
         </span>
-        <Link to="/login" className='loginLink'>Login</Link>
+        {user.name ? 
+          <span className='logout'><a href="/" onClick={handleLogout} className='logoutLink'>Logout</a> [{user.name}]</span>
+          :
+          <Link to="/login" className='loginLink'>Login</Link>
+        }
       </div>
       <Route exact path="/login">
         <Login onLogin={handleLogin} />
