@@ -181,7 +181,11 @@ const App = () => {
     console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
 
     try {
-      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
+      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
     } catch (ex) {
       medals.current.forEach(medal => {
         country[medal.name].page_value = originalCounts[medal.name];
