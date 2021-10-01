@@ -25,6 +25,14 @@ const App = () => {
     { id: 2, name: 'silver' },
     { id: 3, name: 'bronze' },
   ]);
+  const [ user, setUser ] = useState(
+    {
+      name: null,
+      canPost: false,
+      canPatch: false,
+      canDelete: false
+    }
+  );
   const latestCountries = useRef(null);
   // latestCountries.current is a ref variable to countries
   // this is needed to access state variable in useEffect w/o dependency
@@ -203,7 +211,7 @@ const App = () => {
     try {
       const resp = await axios.post(usersEndpoint, { username: username, password: password });
       const encodedJwt = resp.data.token;
-      console.log(getUser(encodedJwt));
+      setUser(getUser(encodedJwt));
     } catch (ex) {
       if (ex.response && (ex.response.status === 401 || ex.response.status === 400 )) {
         alert("Login failed");
