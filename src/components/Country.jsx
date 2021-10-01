@@ -2,7 +2,7 @@ import React from 'react';
 import Medal from './Medal';
 
 const Country = (props) => {
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete, canPatch } = props;
 
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
@@ -31,6 +31,7 @@ const Country = (props) => {
           key={ medal.id } 
           country={ country } 
           medal={ medal } 
+          canPatch={ canPatch }
           onIncrement={ onIncrement } 
           onDecrement={ onDecrement } />
       ) }
