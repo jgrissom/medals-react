@@ -196,6 +196,9 @@ const App = () => {
     mutableCountries[idx][medalName].page_value += (1 * factor);
     setCountries(mutableCountries);
   }
+  const handleLogin = async (username, password) => {
+    console.log(`login: ${username}`);
+  }
   const getAllMedalsTotal = () => {
     let sum = 0;
     medals.current.forEach(medal => { sum += countries.reduce((a, b) => a + b[medal.name].page_value, 0); });
@@ -211,7 +214,7 @@ const App = () => {
         <Link to="/login" className='loginLink'>Login</Link>
       </div>
       <Route exact path="/login">
-        <Login />
+        <Login onLogin={handleLogin} />
       </Route>
       <div className='countries'>
           { countries.map(country => 
