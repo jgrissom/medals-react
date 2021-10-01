@@ -2,21 +2,13 @@ import React from 'react';
 import Medal from './Medal';
 
 const Country = (props) => {
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
 
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
     medals.forEach(medal => { sum += country[medal.name].page_value; });
     return sum;
   }
-  // const renderSaveButton = () => {
-  //   medals.forEach(medal => {
-  //     if (country[medal.name].page_value !== country[medal.name].saved_value) {
-  //       return true;
-  //     }
-  //   });
-  //   return false;
-  // }
   const renderSaveButton = () => {
     let unsaved = false;
     medals.forEach(medal => {
@@ -48,7 +40,7 @@ const Country = (props) => {
           <button style={{marginLeft:'8px'}} onClick={ () => onReset(country.id) }>reset</button>
         </React.Fragment>
         :
-        <button onClick={() => onDelete(country.id)}>delete</button>
+        canDelete && <button onClick={() => onDelete(country.id)}>delete</button>
       }
       <hr />
     </div>
