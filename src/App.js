@@ -152,28 +152,34 @@ const App = () => {
     }
   }
   const handleDelete = async (countryId) => {
-    const originalCountries = countries;
-    setCountries(countries.filter(c => c.id !== countryId));
-    try {
-      await axios.delete(`${apiEndpoint}/${countryId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
-        // country already deleted
-        console.log("The record does not exist - it may have already been deleted");
-      } else { 
-        setCountries(originalCountries);
-        if (ex.response && ex.response.status === 401) {
-          alert("You are not authorized to complete this request");
-        } else if (ex.response) {
-          console.log(ex.response);
-        } else {
-          console.log("Request failed");
+    // check for valid token
+    if (isValidToken())
+    {
+      const originalCountries = countries;
+      setCountries(countries.filter(c => c.id !== countryId));
+      try {
+        await axios.delete(`${apiEndpoint}/${countryId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+      } catch (ex) {
+        if (ex.response && ex.response.status === 404) {
+          // country already deleted
+          console.log("The record does not exist - it may have already been deleted");
+        } else { 
+          setCountries(originalCountries);
+          if (ex.response && ex.response.status === 401) {
+            alert("You are not authorized to complete this request");
+          } else if (ex.response) {
+            console.log(ex.response);
+          } else {
+            console.log("Request failed");
+          }
         }
       }
+    } else {
+      alert('Your token has expired');
     }
   }
   const handleSave = async (countryId) => {
