@@ -197,28 +197,37 @@ const App = () => {
       }
     });
     console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
-
-    try {
-      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+    // check for valid token
+    if (isValidToken())
+    {
+      try {
+        await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+      } catch (ex) {
+        medals.current.forEach(medal => {
+          country[medal.name].page_value = originalCounts[medal.name];
+          country[medal.name].saved_value = originalCounts[medal.name];
+        });     
+        if (ex.response && ex.response.status === 404) {
+          // country does not exist
+          console.log("The record does not exist - it may have been deleted");
+        } else if (ex.response && ex.response.status === 401) { 
+          alert('You are not authorized to complete this request');
+        } else if (ex.response) {
+          console.log(ex.response);
+        } else {
+          console.log("Request failed");
         }
-      });
-    } catch (ex) {
+      }
+    } else {
       medals.current.forEach(medal => {
         country[medal.name].page_value = originalCounts[medal.name];
         country[medal.name].saved_value = originalCounts[medal.name];
-      });     
-      if (ex.response && ex.response.status === 404) {
-        // country does not exist
-        console.log("The record does not exist - it may have been deleted");
-      } else if (ex.response && ex.response.status === 401) { 
-        alert('You are not authorized to complete this request');
-      } else if (ex.response) {
-        console.log(ex.response);
-      } else {
-        console.log("Request failed");
-      }
+      });  
+      alert('Your token has expired');
     }
     setCountries(mutableCountries);
   }
