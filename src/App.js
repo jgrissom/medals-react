@@ -127,22 +127,28 @@ const App = () => {
   }, [connection]);
 
   const handleAdd = async (name) => {
-    try {
-      await axios.post(apiEndpoint, {
-        name: name
-      }, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+    // check for valid token
+    if (isValidToken())
+    {
+      try {
+        await axios.post(apiEndpoint, {
+          name: name
+        }, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+      } catch (ex) {
+        if (ex.response && ex.response.status === 401) {
+          alert("You are not authorized to complete this request");
+        } else if (ex.response) {
+          console.log(ex.response);
+        } else {
+          console.log("Request failed");
         }
-      });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 401) {
-        alert("You are not authorized to complete this request");
-      } else if (ex.response) {
-        console.log(ex.response);
-      } else {
-        console.log("Request failed");
       }
+    } else {
+      alert('Your token has expired');
     }
   }
   const handleDelete = async (countryId) => {
@@ -244,7 +250,7 @@ const App = () => {
     }
   }
   const handleLogout = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     console.log('logout');
     localStorage.removeItem('token');
     setUser({
@@ -277,6 +283,22 @@ const App = () => {
       canPatch: false,
       canDelete: false,
     }
+  }
+  const isValidToken = () => {
+    const encodedJwt = localStorage.getItem("token");
+    // check for existing token
+    if (encodedJwt) {
+      const decodedJwt = jwtDecode(encodedJwt);
+      const diff = Date.now() - (decodedJwt['exp'] * 1000);
+      if (diff < 0) {
+        console.log(`token expires in ${parseInt((diff * -1) / 60000)} minutes`);
+        return true;
+      } else {
+        console.log(`token expired ${parseInt(diff / 60000)} minutes ago`);
+        handleLogout();
+      }
+    }
+    return false;
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
