@@ -257,12 +257,26 @@ const App = () => {
   }
   const getUser = (encodedJwt) => {
     const decodedJwt = jwtDecode(encodedJwt);
+    const diff = Date.now() - (decodedJwt['exp'] * 1000);
+    if (diff < 0) {
+      // token not expired
+      console.log(`token expires in ${parseInt((diff * -1) / 60000)} minutes`);
+      return {
+        name: decodedJwt['username'],
+        canPost: decodedJwt['roles'].indexOf('medals-post') === -1 ? false : true,
+        canPatch: decodedJwt['roles'].indexOf('medals-patch') === -1 ? false : true,
+        canDelete: decodedJwt['roles'].indexOf('medals-delete') === -1 ? false : true,
+      };
+    }
+    // token expired
+    console.log(`token expired ${parseInt(diff / 60000)} minutes ago`);
+    localStorage.removeItem('token');
     return {
-      name: decodedJwt['username'],
-      canPost: decodedJwt['roles'].indexOf('medals-post') === -1 ? false : true,
-      canPatch: decodedJwt['roles'].indexOf('medals-patch') === -1 ? false : true,
-      canDelete: decodedJwt['roles'].indexOf('medals-delete') === -1 ? false : true,
-    };
+      name: null,
+      canPost: false,
+      canPatch: false,
+      canDelete: false,
+    }
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
