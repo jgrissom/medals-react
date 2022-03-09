@@ -149,7 +149,11 @@ const App = () => {
     console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
 
     try {
-      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
+      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         // country does not exist
