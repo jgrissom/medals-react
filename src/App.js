@@ -102,7 +102,6 @@ const App = () => {
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
   const handleDecrement = (countryId, medalName) =>  handleUpdate(countryId, medalName, -1)
   const handleUpdate = async (countryId, medalName, factor) => {
-    const originalCountries = countries;
     const idx = countries.findIndex(c => c.id === countryId);
     const mutableCountries = [...countries ];
     mutableCountries[idx][medalName] += (1 * factor);
@@ -114,11 +113,18 @@ const App = () => {
       await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
-        // country already deleted
-        console.log("The record does not exist - it may have already been deleted");
-      } else { 
-        alert('An error occurred while updating');
-        setCountries(originalCountries);
+        // country does not exist
+        console.log("The record does not exist - it may have been deleted");
+      } else if (ex.response && (ex.response.status === 401 || ex.response.status === 403)) { 
+        // in order to restore the defualt medal counts, we would need to save 
+        // the page value and saved value for each medal (like in the advanced example)
+        alert('You are not authorized to complete this request');
+        // to simplify, I am reloading the page instead
+        window.location.reload(false);
+      } else if (ex.response) {
+        console.log(ex.response);
+      } else {
+        console.log("Request failed");
       }
     }
   }
