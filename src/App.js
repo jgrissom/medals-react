@@ -4,7 +4,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import Login from './components/Login';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
@@ -152,7 +153,7 @@ const App = () => {
     try {
       const resp = await axios.post(usersEndpoint, { username: username, password: password });
       const encodedJwt = resp.data.token;
-      console.log(encodedJwt);
+      console.log(getUser(encodedJwt));
     } catch (ex) {
       if (ex.response && (ex.response.status === 401 || ex.response.status === 400 )) {
         alert("Login failed");
@@ -162,6 +163,16 @@ const App = () => {
         console.log("Request failed");
       }
     }
+  }
+  const getUser = (encodedJwt) => {
+    // return unencoded user / permissions
+    const decodedJwt = jwtDecode(encodedJwt);
+    return {
+      name: decodedJwt['username'],
+      canPost: decodedJwt['roles'].indexOf('medals-post') === -1 ? false : true,
+      canPatch: decodedJwt['roles'].indexOf('medals-patch') === -1 ? false : true,
+      canDelete: decodedJwt['roles'].indexOf('medals-delete') === -1 ? false : true,
+    };
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
