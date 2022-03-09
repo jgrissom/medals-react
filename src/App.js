@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { HubConnectionBuilder } from '@microsoft/signalr';
+import Login from './components/Login';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
 import './App.css';
@@ -157,6 +158,7 @@ const App = () => {
           { getAllMedalsTotal() }
         </span>
       </div>
+      <Login />
       <div className='countries'>
           { countries.map(country => 
             <Country 
