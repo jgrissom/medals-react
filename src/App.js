@@ -146,6 +146,9 @@ const App = () => {
       }
     }
   }
+  const handleLogin = async (username, password) => {
+    console.log(`login: ${username}`);
+  }
   const getAllMedalsTotal = () => {
     let sum = 0;
     medals.current.forEach(medal => { sum += countries.reduce((a, b) => a + b[medal.name], 0); });
@@ -161,7 +164,7 @@ const App = () => {
         <Link to="/login" className='loginLink'>Login</Link>
       </div>
       <Route exact path="/login">
-        <Login />
+        <Login onLogin={handleLogin} />
       </Route>
       <div className='countries'>
           { countries.map(country => 
