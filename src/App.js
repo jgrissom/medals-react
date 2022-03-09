@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { HubConnectionBuilder } from '@microsoft/signalr';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Login from './components/Login';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
@@ -151,14 +152,17 @@ const App = () => {
     return sum;
   }
   return (
-    <React.Fragment>
+    <Router>
       <div className='appHeading'>
         Olympic Medals
         <span className='badge'>
           { getAllMedalsTotal() }
         </span>
+        <Link to="/login" className='loginLink'>Login</Link>
       </div>
-      <Login />
+      <Route exact path="/login">
+        <Login />
+      </Route>
       <div className='countries'>
           { countries.map(country => 
             <Country 
@@ -171,7 +175,7 @@ const App = () => {
           )}
       </div>
       <NewCountry onAdd={ handleAdd } />
-    </React.Fragment>
+    </Router>
   );
 }
  

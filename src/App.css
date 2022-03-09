@@ -59,6 +59,13 @@
   margin-bottom: 20px; 
 }
 
+.loginLink {
+  color: #fff;
+  position:absolute;
+  top: 8px;
+  left: 8px;
+}
+
 .loginForm {
   border: 1px solid #999;
   background-color: #dedede;
