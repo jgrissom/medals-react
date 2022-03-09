@@ -241,7 +241,7 @@ const App = () => {
               onDecrement={ handleDecrement } />
           )}
       </div>
-      <NewCountry onAdd={ handleAdd } />
+      { user.canPost && <NewCountry onAdd={ handleAdd } /> }
     </Router>
   );
 }
