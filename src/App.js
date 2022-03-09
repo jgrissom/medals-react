@@ -104,8 +104,14 @@ const App = () => {
         // country already deleted
         console.log("The record does not exist - it may have already been deleted");
       } else { 
-        alert('An error occurred while deleting');
         setCountries(originalCountries);
+        if (ex.response && (ex.response.status === 401 || ex.response.status === 403)) {
+          alert("You are not authorized to complete this request");
+        } else if (ex.response) {
+          console.log(ex.response);
+        } else {
+          console.log("Request failed");
+        }
       }
     }
   }
