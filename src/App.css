@@ -59,11 +59,15 @@
   margin-bottom: 20px; 
 }
 
-.loginLink {
+.loginLink, .logout {
   color: #fff;
   position:absolute;
   top: 8px;
   left: 8px;
+}
+
+.logoutLink {
+  color: #fff;
 }
 
 .loginForm {
