@@ -96,7 +96,13 @@ const App = () => {
 
   const handleAdd = async (name) => {
     try {
-      await axios.post(apiEndpoint, { name: name });
+      await axios.post(apiEndpoint, {
+        name: name
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
     } catch (ex) {
       if (ex.response && (ex.response.status === 401 || ex.response.status === 403)) {
         alert("You are not authorized to complete this request");
