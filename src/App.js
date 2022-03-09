@@ -236,6 +236,7 @@ const App = () => {
               key={ country.id } 
               country={ country } 
               medals={ medals.current }
+              canDelete={ user.canDelete }
               onDelete={ handleDelete }
               onIncrement={ handleIncrement } 
               onDecrement={ handleDecrement } />

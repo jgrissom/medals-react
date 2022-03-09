@@ -2,7 +2,7 @@ import React from 'react';
 import Medal from './Medal';
 
 const Country = (props) => {
-  const { country, medals, onIncrement, onDecrement, onDelete } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
 
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
@@ -25,7 +25,7 @@ const Country = (props) => {
           onIncrement={ onIncrement } 
           onDecrement={ onDecrement } />
       ) }
-      <button onClick={() => onDelete(country.id)}>delete</button>
+      { canDelete && <button onClick={() => onDelete(country.id)}>delete</button> }
       <hr />
     </div>
   );
