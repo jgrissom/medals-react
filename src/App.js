@@ -49,6 +49,12 @@ const App = () => {
     }
     fetchCountries();
 
+    const encodedJwt = localStorage.getItem("token");
+    // check for existing token
+    if (encodedJwt) {
+      setUser(getUser(encodedJwt));
+    }
+
     // signalR
     const newConnection = new HubConnectionBuilder()
       .withUrl(hubEndpoint)
