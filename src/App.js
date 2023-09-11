@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import './App.css';
 
 class App extends Component {
@@ -59,6 +61,19 @@ class App extends Component {
             </Navbar.Brand>
           </Container>
       </Navbar>
+      <Container fluid>
+        <Row>
+          <Col className="mt-3">
+            Col 1
+          </Col>
+          <Col className="mt-3">
+            Col 2
+          </Col>
+          <Col className="mt-3">
+            Col 3
+          </Col>
+        </Row>
+      </Container>
       </React.Fragment>
     );
   }
