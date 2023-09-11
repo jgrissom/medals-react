@@ -2,8 +2,8 @@
 // Author:      Jeff Grissom
 // Version:     4.xx
 import React, { Component } from 'react';
-import Country from './components/Country';
-import NewCountry from './components/NewCountry';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
 import './App.css';
 
 class App extends Component {
@@ -50,24 +50,13 @@ class App extends Component {
   render() { 
     return (
       <React.Fragment>
-        <div className='appHeading'>
-          Olympic Medals
-          <span className='badge'>
-            { this.getAllMedalsTotal() }
-          </span>
-        </div>
-        <div className='countries'>
-            { this.state.countries.map(country => 
-              <Country 
-                key={ country.id } 
-                country={ country } 
-                medals={ this.state.medals }
-                onDelete={ this.handleDelete }
-                onIncrement={ this.handleIncrement } 
-                onDecrement={ this.handleDecrement } />
-            )}
-        </div>
-        <NewCountry onAdd={ this.handleAdd } />
+      <Navbar className="navbar-dark bg-dark">
+          <Container fluid>
+            <Navbar.Brand>
+              Olympic Medals
+            </Navbar.Brand>
+          </Container>
+      </Navbar>
       </React.Fragment>
     );
   }
