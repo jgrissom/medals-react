@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/Badge';
 import './App.css';
 
 class App extends Component {
@@ -54,6 +55,7 @@ class App extends Component {
           <Container fluid>
             <Navbar.Brand>
               Olympic Medals
+              <Badge className="ml-2" bg="light" text="dark" pill>{ this.getAllMedalsTotal() }</Badge>
             </Navbar.Brand>
           </Container>
       </Navbar>
