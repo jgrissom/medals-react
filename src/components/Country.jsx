@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Medal from './Medal';
+import Card from 'react-bootstrap/Card';
 
 class Country extends Component {
   getMedalsTotal(country, medals) {
@@ -10,24 +11,11 @@ class Country extends Component {
   render() { 
     const { country, medals, onIncrement, onDecrement, onDelete } = this.props;
     return (
-      <div className="country">
-        <div className="name">
-          { country.name }
-          <span className="badge">
-            { this.getMedalsTotal(country, medals) }
-          </span>
-        </div>
-        { medals.map(medal =>
-          <Medal 
-            key={ medal.id } 
-            country={ country } 
-            medal={ medal } 
-            onIncrement={ onIncrement } 
-            onDecrement={ onDecrement } />
-        ) }
-        <button onClick={() => onDelete(country.id)}>delete</button>
-        <hr />
-      </div>
+      <Card>
+        <Card.Body>
+          <Card.Title>{ country.name }</Card.Title>
+        </Card.Body>
+      </Card>
     );
   }
 }
