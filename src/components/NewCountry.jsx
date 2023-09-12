@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 import { PlusCircleFill } from 'react-bootstrap-icons';
 
 class NewCountry extends Component {
   state = {
     showModal: false,
+    showToast: false,
     newCountryName: "",
   }
   handleModalClose = () => this.setState({ showModal: false });
   handleModalKeyPress = (e) => (e.keyCode ? e.keyCode : e.which) === 13 && this.handleAdd();
   handleAdd = () => {
-    this.state.newCountryName.length > 0 && this.props.onAdd(this.state.newCountryName);
+    this.state.newCountryName.length > 0 ? this.props.onAdd(this.state.newCountryName) : this.setState({ showToast: true });
     this.handleModalClose();
   }
 
@@ -49,6 +52,14 @@ class NewCountry extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
+        <ToastContainer className="position-fixed" style={{top:5,right:5,zIndex:5,width:'18rem'}}>
+        <Toast show={ this.state.showToast } onClose={ () => this.setState({showToast: false })} delay={ 2000 } autohide>
+          <Toast.Header className="justify-content-between">
+            <strong className="me-auto">Country Not Added</strong>
+          </Toast.Header>
+          <Toast.Body>Enter a name to add a new country</Toast.Body>
+        </Toast>
+        </ToastContainer>
       </React.Fragment>
     );
   }
