@@ -10,6 +10,7 @@ class NewCountry extends Component {
     newCountryName: "",
   }
   handleModalClose = () => this.setState({ showModal: false });
+  handleModalKeyPress = (e) => (e.keyCode ? e.keyCode : e.which) === 13 && this.handleAdd();
   handleAdd = () => {
     this.state.newCountryName.length > 0 && this.props.onAdd(this.state.newCountryName);
     this.handleModalClose();
@@ -21,7 +22,7 @@ class NewCountry extends Component {
         <Button variant="outline-success" onClick={ () => this.setState({ showModal: true, newCountryName: "" })}>
           <PlusCircleFill />
         </Button>
-        <Modal show={ this.state.showModal } onHide={ this.handleModalClose }>
+        <Modal onKeyPress={ this.handleModalKeyPress } show={ this.state.showModal } onHide={ this.handleModalClose }>
           <Modal.Header closeButton>
             <Modal.Title>New Country</Modal.Title>
           </Modal.Header>
