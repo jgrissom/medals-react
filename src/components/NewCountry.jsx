@@ -7,13 +7,18 @@ import { PlusCircleFill } from 'react-bootstrap-icons';
 class NewCountry extends Component {
   state = {
     showModal: false,
+    newCountryName: "",
   }
   handleModalClose = () => this.setState({ showModal: false });
+  handleAdd = () => {
+    this.state.newCountryName.length > 0 && this.props.onAdd(this.state.newCountryName);
+    this.handleModalClose();
+  }
 
   render() { 
     return (
       <React.Fragment>
-        <Button variant="outline-success" onClick={ () => this.setState({ showModal: true })}>
+        <Button variant="outline-success" onClick={ () => this.setState({ showModal: true, newCountryName: "" })}>
           <PlusCircleFill />
         </Button>
         <Modal show={ this.state.showModal } onHide={ this.handleModalClose }>
@@ -25,6 +30,9 @@ class NewCountry extends Component {
               <Form.Label>Country Name</Form.Label>
               <Form.Control
                 type="text"
+                name="newCountryName"
+                onChange={ (e) => this.setState({ [e.target.name]: e.target.value}) }
+                value={ this.state.newCountryName }
                 placeholder="enter name"
                 autoFocus
                 autoComplete='off'
@@ -35,7 +43,7 @@ class NewCountry extends Component {
             <Button variant="secondary" onClick={ this.handleModalClose }>
               Close
             </Button>
-            <Button variant="primary">
+            <Button variant="primary" onClick={ this.handleAdd }>
               Save Changes
             </Button>
           </Modal.Footer>
