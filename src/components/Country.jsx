@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Medal from './Medal';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 
 class Country extends Component {
   getMedalsTotal(country, medals) {
@@ -13,7 +14,14 @@ class Country extends Component {
     return (
       <Card>
         <Card.Body>
-          <Card.Title>{ country.name }</Card.Title>
+          <Card.Title className="d-flex justify-content-between">
+            <span>
+            { country.name }
+            <Badge bg="secondary" text="light" pill className="ml-2">
+              { this.getMedalsTotal(country, medals) }
+            </Badge>
+            </span>
+          </Card.Title>
         </Card.Body>
       </Card>
     );
