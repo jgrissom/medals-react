@@ -23,7 +23,7 @@ class Country extends Component {
               { this.getMedalsTotal(country, medals) }
             </Badge>
             </span>
-            <TrashFill className='icon-btn' style={{ color:'red' }} />
+            <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
           </Card.Title>
           <ListGroup variant="flush">
           { medals.map(medal =>
