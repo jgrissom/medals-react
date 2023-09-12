@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Medal from './Medal';
+import { TrashFill } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -22,6 +23,7 @@ class Country extends Component {
               { this.getMedalsTotal(country, medals) }
             </Badge>
             </span>
+            <TrashFill className='icon-btn' style={{ color:'red' }} />
           </Card.Title>
           <ListGroup variant="flush">
           { medals.map(medal =>
