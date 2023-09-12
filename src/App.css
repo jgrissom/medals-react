@@ -1,3 +1,16 @@
 .medal-count {
     user-select:none;
 }
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+.icon-btn {
+    cursor: pointer;
+}
+.icon-btn:hover {
+    opacity: .5;
+}
+.card {
+    width: 22rem;
+}
