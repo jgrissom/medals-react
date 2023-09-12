@@ -2,6 +2,7 @@
 // Author:      Jeff Grissom
 // Version:     4.xx
 import React, { Component } from 'react';
+import Country from './components/Country';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
@@ -62,16 +63,17 @@ class App extends Component {
           </Container>
       </Navbar>
       <Container fluid>
-        <Row>
-          <Col className="mt-3">
-            Col 1
+      <Row>
+        { this.state.countries.map(country => 
+          <Col className="mt-3" key={ country.id }>
+            <Country  
+              country={ country } 
+              medals={ this.state.medals }
+              onDelete={ this.handleDelete }
+              onIncrement={ this.handleIncrement } 
+              onDecrement={ this.handleDecrement } />
           </Col>
-          <Col className="mt-3">
-            Col 2
-          </Col>
-          <Col className="mt-3">
-            Col 3
-          </Col>
+        )}
         </Row>
       </Container>
       </React.Fragment>
