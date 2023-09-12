@@ -3,6 +3,7 @@
 // Version:     4.xx
 import React, { Component } from 'react';
 import Country from './components/Country';
+import NewCountry from './components/NewCountry';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
@@ -60,6 +61,7 @@ class App extends Component {
               Olympic Medals
               <Badge className="ml-2" bg="light" text="dark" pill>{ this.getAllMedalsTotal() }</Badge>
             </Navbar.Brand>
+            <NewCountry onAdd={ this.handleAdd } />
           </Container>
       </Navbar>
       <Container fluid>
