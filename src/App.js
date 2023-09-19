@@ -35,8 +35,20 @@ const App = () => {
     const { data: post } = await axios.post(apiEndpoint, { name: name });
     setCountries(countries.concat(post));
   }
-  const handleDelete = (countryId) => {
-    // setCountries([...countries].filter(c => c.id !== countryId));
+  const handleDelete = async (countryId) => {
+    const originalCountries = countries;
+    setCountries(countries.filter(c => c.id !== countryId));
+    try {
+      await axios.delete(`${apiEndpoint}/${countryId}`);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        // country already deleted
+        console.log("The record does not exist - it may have already been deleted");
+      } else { 
+        alert('An error occurred while deleting');
+        setCountries(originalCountries);
+      }
+    }
   }
   const handleIncrement = (countryId, medalName) => {
     const idx = countries.findIndex(c => c.id === countryId);
