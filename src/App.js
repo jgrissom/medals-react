@@ -75,19 +75,13 @@ const App = () => {
       }
     }
   }
-  const handleIncrement = (countryId, medalName) => {
-    // const idx = countries.findIndex(c => c.id === countryId);
-    // const mutableCountries = [...countries ];
-    // mutableCountries[idx][medalName] += 1;
-    // setCountries(mutableCountries);
-    console.log('+');
-  }
-  const handleDecrement = (countryId, medalName) => {
-    // const idx = countries.findIndex(c => c.id === countryId);
-    // const mutableCountries = [...countries ];
-    // mutableCountries[idx][medalName] -= 1;
-    // setCountries(mutableCountries);
-    console.log('-');
+  const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
+  const handleDecrement = (countryId, medalName) => handleUpdate(countryId, medalName, -1);
+  const handleUpdate = (countryId, medalName, factor) => {
+    const idx = countries.findIndex(c => c.id === countryId);
+    const mutableCountries = [...countries ];
+    mutableCountries[idx][medalName].page_value += (1 * factor);
+    setCountries(mutableCountries);
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
