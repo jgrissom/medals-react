@@ -47,9 +47,18 @@ const App = () => {
   }, []);
 
   const handleAdd = async (name) => {
-    // const { data: post } = await axios.post(apiEndpoint, { name: name });
-    // setCountries(countries.concat(post));
-    console.log('ADD');
+    const { data: post } = await axios.post(apiEndpoint, { name: name });
+    let newCountry = { 
+      id: post.id, 
+      name: post.name,
+    };
+    medals.current.forEach(medal => {
+      const count = post[medal.name];
+      // when a new country is added, we need to store page and saved values for
+      // medal counts in state
+      newCountry[medal.name] = { page_value: count, saved_value: count };
+    });
+    setCountries(countries.concat(newCountry));
   }
   const handleDelete = async (countryId) => {
     const originalCountries = countries;
