@@ -7,7 +7,12 @@ const Medal = (props) => {
   return (
     <React.Fragment>
       <div style={{ textTransform: "capitalize"}}>
-        { medal.name } Medals
+        { 
+          ( country[medal.name].page_value !== country[medal.name].saved_value) ?
+            <span className="delta">{medal.name} Medals: </span>
+          :
+            <span>{medal.name} Medals</span>
+        }
       </div>
       <div className="medal-count">
         <DashSquare 
