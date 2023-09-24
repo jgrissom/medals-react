@@ -75,8 +75,34 @@ const App = () => {
       }
     }
   }
-  const handleSave = (countryId) => {
-    console.log(`Save: ${countryId}`);
+  const handleSave = async (countryId) => {
+    const originalCountries = countries;
+
+    const idx = countries.findIndex(c => c.id === countryId);
+    const mutableCountries = [ ...countries ];
+    const country = mutableCountries[idx];
+    let jsonPatch = [];
+    medals.current.forEach(medal => {
+      if (country[medal.name].page_value !== country[medal.name].saved_value) {
+        jsonPatch.push({ op: "replace", path: medal.name, value: country[medal.name].page_value });
+        country[medal.name].saved_value = country[medal.name].page_value;
+      }
+    });
+    console.log(`json patch for id: ${countryId}: ${JSON.stringify(jsonPatch)}`);
+    // update state
+    setCountries(mutableCountries);
+
+    try {
+      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        // country already deleted
+        console.log("The record does not exist - it may have already been deleted");
+      } else { 
+        alert('An error occurred while updating');
+        setCountries(originalCountries);
+      }
+    }
   }
   const handleReset = (countryId) => {
     console.log(`Reset: ${countryId}`);
