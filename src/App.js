@@ -23,6 +23,10 @@ const App = () => {
     { id: 2, name: 'silver' },
     { id: 3, name: 'bronze' },
   ]);
+  const latestCountries = useRef(null);
+  // latestCountries.current is a ref variable to countries
+  // this is needed to access state variable in useEffect w/o dependency
+  latestCountries.current = countries;
 
   // this is the functional equivalent to componentDidMount
   useEffect(() => {
@@ -56,6 +60,18 @@ const App = () => {
 
     setConnection(newConnection);
   }, []);
+
+  // componentDidUpdate (changes to connection)
+  useEffect(() => {
+    if (connection) {
+      connection.start()
+      .then(() => {
+        console.log('Connected!')
+      })
+      .catch(e => console.log('Connection failed: ', e));
+    }
+  // useEffect is dependent on changes connection
+  }, [connection]);
 
   const handleAdd = async (name) => {
     const { data: post } = await axios.post(apiEndpoint, { name: name });
