@@ -90,6 +90,9 @@ const App = () => {
           mutableCountries = mutableCountries.filter(c => c.id !== id);
           setCountries(mutableCountries);
         });
+        connection.on('ReceivePatchMessage', country => {
+          console.log(`Patch: ${country.name}`);
+        });
       })
       .catch(e => console.log('Connection failed: ', e));
     }
