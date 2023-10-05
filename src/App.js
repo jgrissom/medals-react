@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/Col';
 import './App.css';
 
 const App = () => {
-  const apiEndpoint = "https://medals-api-6.azurewebsites.net/api/country";
+  const apiEndpoint = "https://medals-api-6.azurewebsites.net/jwt/api/country";
   const hubEndpoint = "https://medals-api-6.azurewebsites.net/medalsHub"
   const [ countries, setCountries ] = useState([]);
   const [ connection, setConnection] = useState(null);
