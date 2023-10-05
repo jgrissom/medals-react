@@ -6,7 +6,7 @@ import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const Country = (props) => {
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
     // use medal count displayed in the web page for medal count totals
@@ -41,7 +41,7 @@ const Country = (props) => {
               <Save onClick={ () => onSave(country.id) } className='icon-btn' />
             </React.Fragment>
             :
-            <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
+            canDelete && <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
           }
         </Card.Title>
         <ListGroup variant="flush">
