@@ -6,7 +6,7 @@ import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const Country = (props) => {
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete, canPatch } = props;
   const getMedalsTotal = (country, medals) => {
     let sum = 0;
     // use medal count displayed in the web page for medal count totals
@@ -50,6 +50,7 @@ const Country = (props) => {
           <Medal  
             country={ country } 
             medal={ medal } 
+            canPatch={ canPatch }
             onIncrement={ onIncrement } 
             onDecrement={ onDecrement } />
         </ListGroup.Item>
