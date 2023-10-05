@@ -6,6 +6,7 @@ import axios from 'axios';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
+import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
@@ -212,7 +213,9 @@ const App = () => {
             Olympic Medals
             <Badge className="ml-2" bg="light" text="dark" pill>{ getAllMedalsTotal() }</Badge>
           </Navbar.Brand>
-          <NewCountry onAdd={ handleAdd } />
+          <Nav className="me-auto">
+            <NewCountry onAdd={ handleAdd } />
+          </Nav>
         </Container>
     </Navbar>
     <Container fluid>
