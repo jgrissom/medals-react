@@ -216,6 +216,7 @@ const App = () => {
     try {
       const resp = await axios.post(usersEndpoint, { username: username, password: password });
       const encodedJwt = resp.data.token;
+      localStorage.setItem('token', encodedJwt);
       setUser(getUser(encodedJwt));
     } catch (ex) {
       if (ex.response && (ex.response.status === 401 || ex.response.status === 400 )) {
@@ -239,6 +240,7 @@ const App = () => {
     };
   }
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setUser({
       name: null,
       authenticated: false,
