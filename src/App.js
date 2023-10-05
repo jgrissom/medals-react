@@ -7,6 +7,7 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -21,6 +22,7 @@ const App = () => {
   const usersEndpoint = "https://medals-api-6.azurewebsites.net/api/users/login";
   const [ countries, setCountries ] = useState([]);
   const [ connection, setConnection] = useState(null);
+  const [ authenticated, setAuthenticated] = useState(false);
   const medals = useRef([
     { id: 1, name: 'gold' },
     { id: 2, name: 'silver' },
@@ -206,6 +208,7 @@ const App = () => {
       const resp = await axios.post(usersEndpoint, { username: username, password: password });
       const encodedJwt = resp.data.token;
       console.log(encodedJwt);
+      setAuthenticated(true);
     } catch (ex) {
       if (ex.response && (ex.response.status === 401 || ex.response.status === 400 )) {
         alert("Login failed");
@@ -215,6 +218,9 @@ const App = () => {
         console.log("Request failed");
       }
     }
+  }
+  const handleLogout = () => {
+    setAuthenticated(false);
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
@@ -231,7 +237,7 @@ const App = () => {
             <Badge className="ml-2" bg="light" text="dark" pill>{ getAllMedalsTotal() }</Badge>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Login onLogin={ handleLogin } />
+            { authenticated ? <Logout onLogout={ handleLogout } /> : <Login onLogin={ handleLogin } /> }
             <NewCountry onAdd={ handleAdd } />
           </Nav>
         </Container>
