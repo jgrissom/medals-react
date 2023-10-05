@@ -25,7 +25,7 @@ const NewCountry = (props) => {
 
   return (
     <React.Fragment>
-      <Nav.Link href="#" onClick={ handleModalShow }>
+      <Nav.Link className="btn" href="#" onClick={ handleModalShow }>
         <PlusCircleFill />
       </Nav.Link>
       <Modal onKeyPress={ handleModalKeyPress } show={ showModal } onHide={ handleModalClose }>
