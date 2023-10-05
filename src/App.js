@@ -188,7 +188,11 @@ const App = () => {
     setCountries(mutableCountries);
 
     try {
-      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch);
+      await axios.patch(`${apiEndpoint}/${countryId}`, jsonPatch, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         // country already deleted
