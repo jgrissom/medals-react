@@ -4,6 +4,11 @@
 import React, { Component } from 'react';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import './App.css';
 
 class App extends Component {
@@ -50,24 +55,29 @@ class App extends Component {
   render() { 
     return (
       <React.Fragment>
-        <div className='appHeading'>
-          Olympic Medals
-          <span className='badge'>
-            { this.getAllMedalsTotal() }
-          </span>
-        </div>
-        <div className='countries'>
-            { this.state.countries.map(country => 
-              <Country 
-                key={ country.id } 
+        <Navbar className="navbar-dark bg-dark">
+            <Container fluid>
+              <Navbar.Brand>
+                Olympic Medals
+                <Badge className="ms-2" bg="light" text="dark" pill>{ this.getAllMedalsTotal() }</Badge>
+              </Navbar.Brand>
+              <NewCountry onAdd={ this.handleAdd } />
+            </Container>
+        </Navbar>
+        <Container fluid>
+          <Row>
+          { this.state.countries.map(country => 
+            <Col className="mt-3" key={ country.id }>
+              <Country  
                 country={ country } 
                 medals={ this.state.medals }
                 onDelete={ this.handleDelete }
                 onIncrement={ this.handleIncrement } 
                 onDecrement={ this.handleDecrement } />
-            )}
-        </div>
-        <NewCountry onAdd={ this.handleAdd } />
+            </Col>
+          )}
+          </Row>
+        </Container>
       </React.Fragment>
     );
   }
