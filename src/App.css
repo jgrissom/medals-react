@@ -18,3 +18,7 @@
   margin-right: auto;
   margin-left: auto;
 }
+.delta {
+  color: red;
+  font-style: italic;
+}
